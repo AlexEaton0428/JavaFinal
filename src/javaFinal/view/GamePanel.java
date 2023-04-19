@@ -17,10 +17,11 @@ public class GamePanel extends JPanel
 	
 	private Controller controller;
 	
+
+	
 	private JButton stand;
 	private JButton hit;
 	
-	private BufferedImage aceSpades;
 	private SpringLayout layout;
 	private JPanel buttonPanel;
 	private JPanel playerCards;
@@ -30,14 +31,6 @@ public class GamePanel extends JPanel
 	{
 		super();
 		
-		try
-		{
-			aceSpades = ImageIO.read(new File("ace_of_spades.jpg"));
-		}
-		catch(IOException error)
-		{
-			controller.handleError(error);
-		}
 		
 		
 		this.buttonPanel = new JPanel(new GridLayout(1,0));
@@ -68,7 +61,8 @@ public class GamePanel extends JPanel
 	
 	private void setupLayout()
 	{
-		
+		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 700, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, buttonPanel, 300, SpringLayout.WEST, this);
 	}
 	
 	private void setupListeners()
@@ -76,10 +70,4 @@ public class GamePanel extends JPanel
 		
 	}
 	
-	@Override
-	protected void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		g.drawImage(aceSpades, 0, 0, this);
-	}
 }

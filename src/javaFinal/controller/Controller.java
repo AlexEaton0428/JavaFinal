@@ -23,4 +23,9 @@ public class Controller
 		JOptionPane.showMessageDialog(window, error.getMessage(), "Oops!", JOptionPane.ERROR_MESSAGE);
 		
 	}
+	
+	public void play()
+	{
+		window.replaceScreen("Game");
+	}
 }
