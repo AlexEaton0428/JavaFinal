@@ -1,8 +1,13 @@
 package javaFinal.model;
 
+import java.io.IOException;
+import javaFinal.controller.Controller;
+
 public class BlackJack
 {
 	private int playerCards[];
+	
+	private Controller controller;
 	
 	public BlackJack()
 	{
@@ -36,7 +41,16 @@ public class BlackJack
 	private String drawCard()
 	{
 		
-		String card = "";
+		String card;
+		try
+		{
+			card = WebReader.getInfo("https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=1");
+		}
+		catch (IOException error)
+		{
+			
+			controller.handleError(error);
+		}
 		
 		return card;
 	}

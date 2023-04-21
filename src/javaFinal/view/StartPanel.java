@@ -40,7 +40,8 @@ public class StartPanel extends JPanel
 	
 	private void setupLayout()
 	{
-		
+		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 350, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, buttonPanel, 375, SpringLayout.WEST, this);
 	}
 	
 	private void setupListeners()
