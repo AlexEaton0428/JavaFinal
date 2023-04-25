@@ -37,7 +37,7 @@ private Controller controller;
                 
                 while ((line = br.readLine()) != null) 
                 {
-                    line += info;
+                    info += line;
                 	
                 }
 	        }

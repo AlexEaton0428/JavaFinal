@@ -1,6 +1,7 @@
 package javaFinal.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,6 +12,7 @@ public class JsonToNot
 {
 	private WebReader reader;
 	private Controller controller;
+	private Card card;
 
 	
 	public JsonToNot(Controller controller) 
@@ -19,27 +21,30 @@ public class JsonToNot
 		this.reader = new WebReader(controller);
 	}
 	
-	public String getJsonData()
+	public String getCard()
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
-		
 		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/mr61tvvg181u/draw/?count=1");
 		
-		return data;
+		String image = "";
 		
-//		try
-//		{
-//			Card card = objectMapper.readValue(data, Card.class);
-//			
-//			System.out.println(card.getSuit());
-//		}
-//		catch(IOException error)
-//		{
-//			controller.handleError(error);
-//		}
+		try
+		{
+			JsonNode node = objectMapper.readTree(data);
+			
+			image = node.get("cards").asText();
+			
+		}
+		catch(IOException error)
+		{
+			controller.handleError(error);
+		}
+		
+		return image;
 		
 		
 
 	}
+	
 
 }

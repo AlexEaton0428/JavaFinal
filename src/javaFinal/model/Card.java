@@ -2,7 +2,8 @@ package javaFinal.model;
 
 public class Card 
 {
-	
+	private boolean success;
+	private String deck_id;
 	private String suit;
 	private int value;
 	private String imageFile;

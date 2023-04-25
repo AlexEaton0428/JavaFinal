@@ -24,7 +24,7 @@ public class Controller
 	
 	public void start()
 	{
-		
+		System.out.println(json.getCard());
 	}
 	
 	public void handleError(Exception error)
@@ -42,4 +42,5 @@ public class Controller
 	{
 		JOptionPane.showMessageDialog(window, data);
 	}
+
 }
