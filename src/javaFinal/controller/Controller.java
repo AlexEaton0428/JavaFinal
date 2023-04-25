@@ -15,7 +15,7 @@ public class Controller
 	public Controller()
 	{
 		window = new GameFrame(this);
-		reader= new WebReader();
+		reader = new WebReader(this);
 	}
 	
 	public void start()

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -12,87 +13,49 @@ import javaFinal.controller.Controller;
 public class WebReader
 {
 	
-	public WebReader()
+private Controller controller;
+	
+	public WebReader(Controller controller)
 	{
-			
+		this.controller = controller;
 	}
 	
 	public String getInfo(String newURL)
 	{
-		try
+		String info = "";
+		
+		try 
 		{
-			
-			URL url = new URL(newURL);
-			
-			String info = "";
-			
-			URLConnection connection = url.openConnection();
-			InputStream inputStream = connection.getInputStream();
-			
-			try(BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) 
-	        {
-	            String line = null;
+	        URL url = new URL(newURL);
+	        URLConnection connection = url.openConnection();
+	        InputStream content = connection.getInputStream();
 	        
-
-	            while ((line = reader.readLine()) != null) 
-	            {
-	                info += line;
-	            }
+	        try(BufferedReader br = new BufferedReader(new InputStreamReader(content))) 
+	        {
+                String line = null;
+            
+                
+                while ((line = br.readLine()) != null) 
+                {
+                    line += info;
+                	
+                }
 	        }
 		}
-		catch()
+	     
+		catch (MalformedURLException error) 
 		{
-			
-		}
+	        controller.handleError(error);
+	    } 
+		catch (IOException error) 
+		{
+			controller.handleError(error);
+	    }
+		
 		
 		return info;
 	}
-        
-//        public String getInfo(String newURL) throws IOException
-//        {
-//        	URL url = new URL(newURL);
-//	        
-//	        String webInfo = "";
-//	        
-//	        URLConnection con = url.openConnection();
-//	        InputStream is = con.getInputStream();
-//	        
-//	        
-//	        
-//	        try(BufferedReader br = new BufferedReader(new InputStreamReader(is))) 
-//	        {
-//	            String line = null;
-//	        
-//	            // read each line and write to System.out
-//	            while ((line = br.readLine()) != null) 
-//	            {
-//	                webInfo += line;
-//	            }
-//	        }
-//	        
-//	        
-//	        return  webInfo;
-//        }
 
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 
