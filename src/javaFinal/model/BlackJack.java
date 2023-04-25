@@ -5,74 +5,48 @@ import javaFinal.controller.Controller;
 
 public class BlackJack
 {
-	private int playerCards[];
+	private Deck playingDeck;
+	private Card [] playingCards;
+	private String deckID;
+	
+	private Card [] playerCards;
+	private Card [] dealerCards;
 	
 	private Controller controller;
 	
 	public BlackJack()
 	{
+		// temp deck ID
+		this.deckID = new String("51");
+		this.playingCards = new Card [51];
+		this.playingDeck = new Deck(deckID, playingCards);
+		
+		this.playerCards = new Card [5];
+		this.dealerCards = new Card [5];
 		
 	}
+	
+	
 	
 	private void playGame()
 	{
+		generateHands();
 		
 		
 	}
 	
-	private String hit()
+	private void generateHands()
 	{
-		String card = drawCard();
-		
-		return card;
-	}
-	
-	private void stand()
-	{
-		countPlayerCards(playerCards);
-		
-	}
-	
-	private String shuffleCards(String deckID)
-	{
-		return deckID;
-	}
-	
-	private String drawCard()
-	{
-		
-		String card;
-		try
+		for (int index = 0; index < playerCards.length; index++)
 		{
-			card = WebReader.getInfo("https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=1");
-		}
-		catch (IOException error)
-		{
-			
-			controller.handleError(error);
+			playerCards[index] = drawCard(deckID);
 		}
 		
-		return card;
+		for (int index = 0; index < dealerCards.length; index++)
+		{
+			dealerCards[index] = drawCard(deckID);
+		}
 	}
 	
-	private int countPlayerCards(int playerCards[])
-	{
-		int cardValues = 0;
-		
-		return cardValues;
-	}
-	
-	private int countDealerCards(int dealerCards[])
-	{
-		int cardValues = 0;
-		
-		return cardValues;
-	}
-	
-	private boolean winCheck(int playerCount, int dealerCount)
-	{
-		boolean win = false;
-		
-		return win;
-	}
+
 }

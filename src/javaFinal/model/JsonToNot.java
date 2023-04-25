@@ -1,6 +1,15 @@
 package javaFinal.model;
 
-public class JsonToNot
+
+import java.io.File;
+import java.io.IOException;
+
+public class JsonToNot 
 {
+	public JsonToNot() 
+	{
+		
+	}
+	
 
 }
