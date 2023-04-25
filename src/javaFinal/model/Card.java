@@ -4,31 +4,38 @@ public class Card
 {
 	
 	private String suit;
-	private String value;
+	private int value;
+	private String imageFile;
 	
-	public Card()
+	public Card(String suit, int value, String imageFile)
 	{
 		this.suit = "";
-		this.value = "";
+		this.value = 0;
+		this.imageFile = "";
 	}
 	
-	private String getSuit()
+	public String getSuit()
 	{
 		return this.suit;
 	}
 	
-	private String getValue()
+	public int getValue()
 	{
 		return this.value;
 	}
 	
-	private void setSuit(String newSuit)
+	public void setSuit(String newSuit)
 	{
 		this.suit = newSuit;
 	}
 	
-	private void setValue(String newValue)
+	public void setValue(String newValue)
 	{
 		this.suit = newValue;
+	}
+	
+	public void setImage(String newImageFile)
+	{
+		this.imageFile = newImageFile;
 	}
 }

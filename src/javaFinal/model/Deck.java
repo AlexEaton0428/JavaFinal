@@ -21,7 +21,7 @@ public class Deck
 		cards[index] = card;
 	}
 	
-	private Card getCard(int index)
+	public Card getCard(int index)
 	{
 		return cards[index];
 	}

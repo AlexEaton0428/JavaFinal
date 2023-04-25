@@ -1,6 +1,8 @@
 package javaFinal.view;
 
 import javaFinal.controller.Controller;
+import javaFinal.model.BlackJack;
+import javaFinal.model.Card;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +19,11 @@ public class GamePanel extends JPanel
 	
 	private Controller controller;
 	
-
+	private BlackJack game;
+	
+	private String deckID;
+	private Card [] cards;
+	private int cardIndex;
 	
 	private JButton stand;
 	private JButton hit;
@@ -32,7 +38,11 @@ public class GamePanel extends JPanel
 		super();
 		
 		
-		
+		this.cards = new Card[51];
+		this.deckID = "";
+		this.game = new BlackJack(deckID, cards);
+		this.cardIndex = 0;
+				
 		this.buttonPanel = new JPanel(new GridLayout(1,0));
 		this.playerCards = new JPanel(new GridLayout(1,0));
 		this.dealerCards = new JPanel(new GridLayout(1,0));
@@ -67,6 +77,13 @@ public class GamePanel extends JPanel
 	
 	private void setupListeners()
 	{
+		
+	}
+	
+	private void playGame()
+	{
+		// add player cards as images
+		// add dealer cards as images
 		
 	}
 	

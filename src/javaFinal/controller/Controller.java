@@ -6,21 +6,25 @@ import java.io.IOException;
 import javaFinal.view.GameFrame;
 
 import javaFinal.model.WebReader;
+import javaFinal.model.JsonToNot;
+
 
 public class Controller
 {
 	private GameFrame window;
 	private WebReader reader;
+	private JsonToNot json;
 	
 	public Controller()
 	{
 		window = new GameFrame(this);
 		reader = new WebReader(this);
+		json = new JsonToNot(this);
 	}
 	
 	public void start()
 	{
-		System.out.println(reader.getInfo("https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=2"));
+		
 	}
 	
 	public void handleError(Exception error)
@@ -32,5 +36,10 @@ public class Controller
 	public void play()
 	{
 		window.replaceScreen("Game");
+	}
+	
+	public void showData(String data)
+	{
+		JOptionPane.showMessageDialog(window, data);
 	}
 }
