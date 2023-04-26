@@ -2,7 +2,6 @@ package javaFinal.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import java.io.File;
 import java.io.IOException;
 
 import javaFinal.controller.Controller;
@@ -15,35 +14,49 @@ public class JsonToNot
 	private Card card;
 
 	
-	public JsonToNot(Controller controller) 
+	public JsonToNot() 
 	{
-		this.controller = controller;
 		this.reader = new WebReader(controller);
 	}
 	
-	public String getCard()
+	public Card getCard(String deckID)
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
-		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/mr61tvvg181u/draw/?count=1");
-		
-		String image = "";
+		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1");
 		
 		try
 		{
-			JsonNode node = objectMapper.readTree(data);
+			JsonNode node = objectMapper.readValue(data, JsonNode.class);
+			JsonNode cardsNode = node.get("cards");
+			JsonNode arrayNode = cardsNode.get(0);
 			
-			image = node.get("cards").asText();
+			JsonNode valueNode = arrayNode.get("value");
+			JsonNode suitNode = arrayNode.get("value");
 			
+			JsonNode imagesNode = arrayNode.path("images");
+	        JsonNode pngNode = imagesNode.path("png");
+	        
+	        String value = valueNode.asText();
+	        String suit = suitNode.asText();
+	        String png = pngNode.asText();
+	        
+	        this.card = new Card(value, suit, png);
 		}
-		catch(IOException error)
+		catch (IOException error)
 		{
-			controller.handleError(error);
+			error.printStackTrace();
 		}
 		
-		return image;
+		return card;
 		
 		
 
+	}
+	
+	public String printData(String deckID)
+	{
+		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1");
+		return data;
 	}
 	
 

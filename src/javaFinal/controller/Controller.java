@@ -7,6 +7,7 @@ import javaFinal.view.GameFrame;
 
 import javaFinal.model.WebReader;
 import javaFinal.model.JsonToNot;
+import javaFinal.model.BlackJack;
 
 
 public class Controller
@@ -14,17 +15,22 @@ public class Controller
 	private GameFrame window;
 	private WebReader reader;
 	private JsonToNot json;
+	private BlackJack game;
 	
 	public Controller()
 	{
-		window = new GameFrame(this);
-		reader = new WebReader(this);
-		json = new JsonToNot(this);
+		this.window = new GameFrame(this);
+		this.reader = new WebReader(this);
+		this.json = new JsonToNot();
+		this.game = new BlackJack("ftp95hugmt3d");
 	}
 	
 	public void start()
 	{
-		System.out.println(json.getCard());
+		game.addCardsToDeck();
+		game.generateHands();
+		System.out.println(game.drawCard().getSuit());
+		
 	}
 	
 	public void handleError(Exception error)

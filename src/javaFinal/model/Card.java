@@ -2,25 +2,25 @@ package javaFinal.model;
 
 public class Card 
 {
-	private boolean success;
-	private String deck_id;
+
+	private String value;
 	private String suit;
-	private int value;
-	private String imageFile;
+	private String image;
 	
-	public Card(String suit, int value, String imageFile)
+	public Card(String newValue, String newSuit, String newImage)
 	{
-		this.suit = "";
-		this.value = 0;
-		this.imageFile = "";
+		this.suit = newSuit;
+		this.value = newValue;
+		this.image = newImage;
 	}
+
 	
 	public String getSuit()
 	{
 		return this.suit;
 	}
 	
-	public int getValue()
+	public String getValue()
 	{
 		return this.value;
 	}
@@ -37,6 +37,6 @@ public class Card
 	
 	public void setImage(String newImageFile)
 	{
-		this.imageFile = newImageFile;
+		this.image = newImageFile;
 	}
 }

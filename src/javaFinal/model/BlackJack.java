@@ -6,6 +6,8 @@ import javaFinal.controller.Controller;
 
 public class BlackJack
 {
+	private JsonToNot parse;
+	
 	private Deck playingDeck;
 	private Card [] playingCards;
 	private String deckID;
@@ -15,10 +17,12 @@ public class BlackJack
 	
 	private Controller controller;
 	
-	public BlackJack(String deckID, Card [] playingCards)
+	public BlackJack(String deckID)
 	{
+		this.parse = new JsonToNot();
+		
 		// official deck ID
-		this.deckID = new String("eof4r8274w1x");
+		this.deckID = new String(deckID);
 		this.playingCards = new Card [51];
 		this.playingDeck = new Deck(deckID, playingCards);
 		
@@ -31,13 +35,13 @@ public class BlackJack
 	
 	private void playGame()
 	{
-		addCardsToDeck(deckID);
+		addCardsToDeck();
 		generateHands();
 		
 	}
 	
 	
-	private void generateHands()
+	public void generateHands()
 	{
 		shuffleCards(deckID);
 		
@@ -52,13 +56,16 @@ public class BlackJack
 		}
 	}
 	
-	private Card drawCard()
+	public Card drawCard()
 	{
 		//add code for getting a card from the API
 		
-		int randomInt = (int)Math.floor(Math.random() * (0 - 52));
+		Random number = new Random();
+		int low = 0;
+		int high = this.playerCards.length - 1;
+		int result = number.nextInt(high-low) + low;
 		
-		Card newCard = playingDeck.getCard(randomInt);
+		Card newCard = playingCards[result];
 		
 		return newCard;
 	}
@@ -78,39 +85,25 @@ public class BlackJack
 		
 	}
 	
-	private void addCardsToDeck(String deckID)
+	public void addCardsToDeck()
 	{
 		for (int index = 0; index < playingCards.length; index++)
 		{
-			//adds new card with values taken from api
+			playingCards [index] = parse.getCard(deckID);
 		}
 	}
 	
-	private int getPlayerCardValue(int index)
+	private String getPlayerCardValue(int index)
 	{
 		return playerCards[index].getValue();
 	}
 	
-	private int getDealerCardValue(int index)
+	private String getDealerCardValue(int index)
 	{
 		return dealerCards[index].getValue();
 	}
 	
-	private String stand(int cardOne, int cardTwo)
-	{
-		String winLoss = "";
-		
-		if (getPlayerCardValue(cardOne) + getPlayerCardValue(cardTwo) > 21)
-		{
-			winLoss = "Loss";
-		}
-		else
-		{
-			winLoss = "Not Loss";
-		}
-		
-		return winLoss;
-	}
+	
 	
 
 }

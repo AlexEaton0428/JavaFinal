@@ -22,7 +22,7 @@ public class GamePanel extends JPanel
 	private BlackJack game;
 	
 	private String deckID;
-	private Card [] cards;
+
 	private int cardIndex;
 	
 	private JButton stand;
@@ -37,10 +37,8 @@ public class GamePanel extends JPanel
 	{
 		super();
 		
-		
-		this.cards = new Card[51];
 		this.deckID = "";
-		this.game = new BlackJack(deckID, cards);
+		this.game = new BlackJack(deckID);
 		this.cardIndex = 0;
 				
 		this.buttonPanel = new JPanel(new GridLayout(1,0));
