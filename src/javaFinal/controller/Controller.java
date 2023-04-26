@@ -5,27 +5,35 @@ import java.io.IOException;
 
 import javaFinal.view.GameFrame;
 
-
+import javaFinal.model.JsonToNot;
 import javaFinal.model.BlackJack;
-
+import javaFinal.model.WebReader;
 
 public class Controller
 {
 	private GameFrame window;
 	private BlackJack game;
+	private JsonToNot parse;
+	private WebReader reader;
+	private String deckID;
 	
 	public Controller()
 	{
+		this.deckID = "";
+		
 		this.window = new GameFrame(this);
 	
-		this.game = new BlackJack("h45nr2v12ov2");
+		this.game = new BlackJack(deckID);
+		
+		this.parse = new JsonToNot();
+		
+		this.reader = new WebReader(this);
 	}
 	
 	public void start()
 	{
-		game.addCardsToDeck();
-		game.generateHands();
-		System.out.println(game.drawCard().getSuit());
+		setDeckID();
+		System.out.println(deckID);
 		
 	}
 	
@@ -40,9 +48,9 @@ public class Controller
 		window.replaceScreen("Game");
 	}
 	
-	public void showData(String data)
+	private void setDeckID()
 	{
-		JOptionPane.showMessageDialog(window, data);
+		this.deckID = parse.getNewDeck();
 	}
 
 }

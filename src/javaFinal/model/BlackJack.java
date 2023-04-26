@@ -8,7 +8,6 @@ public class BlackJack
 {
 	private JsonToNot parse;
 	
-	private Deck playingDeck;
 	private Card [] playingCards;
 	private String deckID;
 	
@@ -24,7 +23,6 @@ public class BlackJack
 		// official deck ID
 		this.deckID = new String(deckID);
 		this.playingCards = new Card [51];
-		this.playingDeck = new Deck(deckID, playingCards);
 		
 		this.playerCards = new Card [5];
 		this.dealerCards = new Card [5];
@@ -58,7 +56,6 @@ public class BlackJack
 	
 	public Card drawCard()
 	{
-		//add code for getting a card from the API
 		
 		Random number = new Random();
 		int low = 0;
@@ -68,21 +65,6 @@ public class BlackJack
 		Card newCard = playingCards[result];
 		
 		return newCard;
-	}
-	
-	private Card presentPlayerCard(int index)
-	{
-		return playerCards[index];
-	}
-	
-	private Card presentDealerCard(int index)
-	{
-		return dealerCards[index];
-	}
-	
-	private void shuffleCards(String deckID)
-	{
-		
 	}
 	
 	public void addCardsToDeck()
@@ -101,6 +83,16 @@ public class BlackJack
 	private String getDealerCardValue(int index)
 	{
 		return dealerCards[index].getValue();
+	}
+	
+	private Card presentPlayerCard(int index)
+	{
+		return playerCards[index];
+	}
+	
+	private Card presentDealerCard(int index)
+	{
+		return dealerCards[index];
 	}
 	
 	

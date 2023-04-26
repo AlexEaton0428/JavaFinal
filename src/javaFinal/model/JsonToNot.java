@@ -12,6 +12,7 @@ public class JsonToNot
 	private WebReader reader;
 	private Controller controller;
 	private Card card;
+	private String deckID;
 
 	
 	public JsonToNot() 
@@ -50,6 +51,28 @@ public class JsonToNot
 		
 		
 
+	}
+	
+	public String getNewDeck()
+	{
+		ObjectMapper objectMapper = new ObjectMapper();
+		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
+		
+		
+		try
+		{
+			JsonNode node = objectMapper.readValue(data, JsonNode.class);
+			JsonNode deckNode = node.get("deck_id");
+			this.deckID  = deckNode.asText();
+	        
+	       
+		}
+		catch (IOException error)
+		{
+			error.printStackTrace();
+		}
+		
+		return  deckID;
 	}
 	
 
