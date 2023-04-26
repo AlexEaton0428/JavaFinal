@@ -31,16 +31,15 @@ public class JsonToNot
 			JsonNode arrayNode = cardsNode.get(0);
 			
 			JsonNode valueNode = arrayNode.get("value");
-			JsonNode suitNode = arrayNode.get("value");
+			JsonNode suitNode = arrayNode.get("suit");
 			
-			JsonNode imagesNode = arrayNode.path("images");
-	        JsonNode pngNode = imagesNode.path("png");
+			JsonNode codeNode = arrayNode.path("code");
 	        
 	        String value = valueNode.asText();
 	        String suit = suitNode.asText();
-	        String png = pngNode.asText();
+	        String code = codeNode.asText();
 	        
-	        this.card = new Card(value, suit, png);
+	        this.card = new Card(value, suit, code + ".png");
 		}
 		catch (IOException error)
 		{
@@ -53,11 +52,7 @@ public class JsonToNot
 
 	}
 	
-	public String printData(String deckID)
-	{
-		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1");
-		return data;
-	}
+
 	
 
 }

@@ -33,6 +33,8 @@ public class GamePanel extends JPanel
 	private JPanel playerCards;
 	private JPanel dealerCards;
 	
+	
+	
 	public GamePanel(Controller controller)
 	{
 		super();
@@ -48,6 +50,7 @@ public class GamePanel extends JPanel
 		this.hit = new JButton("HIT");
 		this.stand = new JButton("STAND");
 		
+		
 		setupPanel();
 		setupLayout();
 		setupListeners();
@@ -61,6 +64,17 @@ public class GamePanel extends JPanel
 		this.add(dealerCards);
 		this.add(playerCards);
 		
+		try
+		{
+			BufferedImage cardImageTwo = ImageIO.read(new File("Cards/AD.png"));
+			JLabel cardLabel = new JLabel(new ImageIcon(cardImageTwo));
+			this.add(cardLabel);
+		}
+		catch (IOException error)
+		{
+			error.printStackTrace();
+		}
+		
 		this.buttonPanel.add(hit);
 		this.buttonPanel.add(stand);
 		
@@ -70,6 +84,9 @@ public class GamePanel extends JPanel
 	private void setupLayout()
 	{
 		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 700, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, buttonPanel, 300, SpringLayout.WEST, this);
+		
+		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 300, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, buttonPanel, 300, SpringLayout.WEST, this);
 	}
 	

@@ -22,7 +22,7 @@ public class Controller
 		this.window = new GameFrame(this);
 		this.reader = new WebReader(this);
 		this.json = new JsonToNot();
-		this.game = new BlackJack("ftp95hugmt3d");
+		this.game = new BlackJack("h45nr2v12ov2");
 	}
 	
 	public void start()
