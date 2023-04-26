@@ -25,6 +25,11 @@ public class Card
 		return this.value;
 	}
 	
+	public String getImage()
+	{
+		return this.image;
+	}
+	
 	public void setSuit(String newSuit)
 	{
 		this.suit = newSuit;
