@@ -27,6 +27,8 @@ public class GamePanel extends JPanel
 
 	private int cardIndex;
 	
+	private boolean playerTurn;
+	
 	private JButton standButton;
 	private JButton hitButton;
 	
@@ -35,14 +37,22 @@ public class GamePanel extends JPanel
 	private JPanel playerCards;
 	private JPanel dealerCards;
 	
-	private JLabel cardLabelOne;
-	private JLabel cardLabelTwo;
+	private JLabel pCardLabelOne;
+	private JLabel pCardLabelTwo;
+	private JLabel pCardLabelThree;
+	private JLabel pCardLabelFour;
+	private JLabel pCardLabelFive;
 	private BufferedImage pCardImageOne;
 	private BufferedImage pCardImageTwo;
 	private BufferedImage pCardImageThree;
 	private BufferedImage pCardImageFour;
 	private BufferedImage pCardImageFive;
 	
+	private JLabel dCardLabelOne;
+	private JLabel dCardLabelTwo;
+	private JLabel dCardLabelThree;
+	private JLabel dCardLabelFour;
+	private JLabel dCardLabelFive;
 	private BufferedImage dCardImageOne;
 	private BufferedImage dCardImageTwo;
 	private BufferedImage dCardImageThree;
@@ -62,6 +72,7 @@ public class GamePanel extends JPanel
 		this.playerHand = game.getPlayerCards();
 		this.dealerHand = game.getDealerCards();
 		this.cardIndex = 0;
+		this.playerTurn = true;
 				
 		this.buttonPanel = new JPanel(new GridLayout(1,0));
 		this.playerCards = new JPanel(new GridLayout(1,0));
@@ -71,12 +82,23 @@ public class GamePanel extends JPanel
 		this.standButton = new JButton("STAND");
 		
 		
-		this.cardLabelOne = null;
+		this.pCardLabelOne = null;
+		this.pCardLabelTwo = null;
+		this.pCardLabelThree = null;
+		this.pCardLabelFour = null;
+		this.pCardLabelFive = null;
+		
 		this.pCardImageOne = null;
 		this.pCardImageTwo = null;
 		this.pCardImageThree = null;
 		this.pCardImageFour = null;
 		this.pCardImageFive = null;
+		
+		this.pCardLabelOne = null;
+		this.pCardLabelTwo = null;
+		this.pCardLabelThree = null;
+		this.pCardLabelFour = null;
+		this.pCardLabelFive = null;
 		
 		this.dCardImageOne = null;
 		this.dCardImageTwo = null;
@@ -99,19 +121,21 @@ public class GamePanel extends JPanel
 		this.add(playerCards);
 		
 		
-		this.buttonPanel.add(hitButton);
-		this.buttonPanel.add(standButton);
+		
 		
 		
 	}
 	
 	private void setupLayout()
 	{
-		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 700, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, buttonPanel, 300, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 250, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, buttonPanel, 250, SpringLayout.WEST, this);
 		
-		layout.putConstraint(SpringLayout.NORTH, playerCards, 300, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, playerCards, 300, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, playerCards, 700, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, playerCards, 600, SpringLayout.WEST, this);
+		
+		layout.putConstraint(SpringLayout.NORTH, dealerCards, 50, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, dealerCards, 600, SpringLayout.WEST, this);
 		
 	}
 	
@@ -130,47 +154,64 @@ public class GamePanel extends JPanel
 	
 	private void updateScreen()
 	{
+		
+		if (playerTurn = true)
+		{
+			this.buttonPanel.add(hitButton);
+			this.buttonPanel.add(standButton);
+		}
+		
 		String playerCardOne = playerHand[0].getImage(); 
 		String playerCardTwo = playerHand[1].getImage();
 		String playerCardThree = playerHand[2].getImage();
 		String playerCardFour = playerHand[3].getImage();
 		String playerCardFive = playerHand[4].getImage();
+		
+		String dealerCardOne = dealerHand[0].getImage(); 
+		String dealerCardTwo = dealerHand[1].getImage();
+		String dealerCardThree = dealerHand[2].getImage();
+		String dealerCardFour = dealerHand[3].getImage();
+		String dealerCardFive = dealerHand[4].getImage();
+		
 		try
 		{
 			pCardImageOne = ImageIO.read(new File("Cards/" + playerCardOne + ".png"));
-			cardLabelOne = new JLabel(new ImageIcon(pCardImageOne));
-			this.playerCards.add(cardLabelOne);
-			
+			pCardLabelOne = new JLabel(new ImageIcon(pCardImageOne));
+			this.playerCards.add(pCardLabelOne);
+		}
+		catch (IOException error)
+		{
+			error.printStackTrace();
+		}
+		try
+		{
+			pCardImageTwo = ImageIO.read(new File("Cards/" + playerCardThree + ".png"));
+			pCardLabelTwo = new JLabel(new ImageIcon(pCardImageTwo));
+			this.playerCards.add(pCardLabelTwo);
+		}
+		catch (IOException error)
+		{
+			error.printStackTrace();
+		}
+		try
+		{
+		
+			dCardImageOne = ImageIO.read(new File("Cards/" + dealerCardOne + ".png"));
+			dCardLabelOne = new JLabel(new ImageIcon(dCardImageOne));
+			this.dealerCards.add(dCardLabelOne);
 		}
 		catch (IOException error)
 		{
 			error.printStackTrace();
 		}
 		
-		if (this.cardIndex == 1)
-		{
-			try
-			{
-				
-			
-				pCardImageTwo = ImageIO.read(new File("Cards/" + playerCardTwo + ".png"));
-				cardLabelTwo = new JLabel(new ImageIcon(pCardImageTwo));
-				this.playerCards.add(cardLabelTwo);
-				
-				
-			}
-			catch (IOException error)
-			{
-				error.printStackTrace();
-			}
-			
-		}
 	}
 	
 	private void addCard()
 	{
-		this.cardIndex += 1;
+		this.cardIndex = 1;
 		updateScreen();
 	}
+	
 	
 }

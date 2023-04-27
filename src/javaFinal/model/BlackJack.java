@@ -14,6 +14,8 @@ public class BlackJack
 	private Card [] playerCards;
 	private Card [] dealerCards;
 	
+	private int cardsCombined;
+	
 	
 	public BlackJack()
 	{
@@ -27,6 +29,8 @@ public class BlackJack
 		
 		this.playerCards = new Card [5];
 		this.dealerCards = new Card [5];
+		
+		this.cardsCombined = 0;
 		
 	}
 	
@@ -96,15 +100,59 @@ public class BlackJack
 		return dealerCards[index].getValue();
 	}
 	
-	private Card presentPlayerCard(int index)
+	private int getIntCardValue(int cardIndex)
 	{
-		return playerCards[index];
+		int value = 0;
+		String stringValue = getPlayerCardValue(cardIndex);
+		
+		if (stringValue.contains("K") || stringValue.contains("Q") || stringValue.contains("J")) 
+		{
+			value = 10;
+		}
+		else if (stringValue.contains("A"))
+		{
+			
+		}
+		else
+		{
+			value = Integer.parseInt(stringValue.substring(0));
+		}
+		
+		return value;
+		
 	}
 	
-	private Card presentDealerCard(int index)
+	private int stand(int cardsOut)
 	{
-		return dealerCards[index];
+		if (cardsOut == 2)
+		{
+			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1);
+		}
+		else if (cardsOut == 3)
+		{
+			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2);
+		}
+		else if (cardsOut == 4)
+		{
+			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2) +
+					+ getIntCardValue(3);
+		}
+		else if (cardsOut == 5)
+		{
+			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2) +
+					+ getIntCardValue(3) + + getIntCardValue(4);
+		}
+		
+		return this.cardsCombined;
 	}
+	
+	 
+	
+	
+		
+	
+	
+	
 	
 	
 	
