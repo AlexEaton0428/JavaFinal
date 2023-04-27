@@ -35,7 +35,7 @@ public class GameFrame extends JFrame
 	{
 		panelCards.add(gamePanel, "Game");
 		panelCards.add(startPanel, "Start");
-		this.setSize(800,800);
+		this.setSize(2000,3000);
 		this.setTitle("Black Jack");
 		this.add(panelCards);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

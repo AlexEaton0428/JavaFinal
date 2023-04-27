@@ -23,17 +23,17 @@ public class Controller
 		
 		this.window = new GameFrame(this);
 	
-		this.game = new BlackJack(deckID);
+		this.game = new BlackJack();
 		
 		this.parse = new JsonToNot();
 		
-		this.reader = new WebReader(this);
+		this.reader = new WebReader();
 	}
 	
 	public void start()
 	{
-		setDeckID();
-		System.out.println(deckID);
+		
+		
 		
 	}
 	
@@ -48,9 +48,5 @@ public class Controller
 		window.replaceScreen("Game");
 	}
 	
-	private void setDeckID()
-	{
-		this.deckID = parse.getNewDeck();
-	}
-
+	
 }

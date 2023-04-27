@@ -10,20 +10,19 @@ import javaFinal.controller.Controller;
 public class JsonToNot 
 {
 	private WebReader reader;
-	private Controller controller;
 	private Card card;
 	private String deckID;
 
 	
 	public JsonToNot() 
 	{
-		this.reader = new WebReader(controller);
+		this.reader = new WebReader();
 	}
 	
-	public Card getCard(String deckID)
+	public Card getCard(String thisDeckID)
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
-		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1");
+		String data = reader.getInfo("https://deckofcardsapi.com/api/deck/" + thisDeckID + "/draw/?count=1");
 		
 		try
 		{
@@ -40,7 +39,7 @@ public class JsonToNot
 	        String suit = suitNode.asText();
 	        String code = codeNode.asText();
 	        
-	        this.card = new Card(value, suit, code + ".png");
+	        this.card = new Card(value, suit, code);
 		}
 		catch (IOException error)
 		{

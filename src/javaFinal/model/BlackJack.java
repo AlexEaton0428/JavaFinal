@@ -14,14 +14,15 @@ public class BlackJack
 	private Card [] playerCards;
 	private Card [] dealerCards;
 	
-	private Controller controller;
 	
-	public BlackJack(String deckID)
+	public BlackJack()
 	{
+		
+		
 		this.parse = new JsonToNot();
 		
 		// official deck ID
-		this.deckID = new String(deckID);
+		this.deckID = new String("");
 		this.playingCards = new Card [51];
 		
 		this.playerCards = new Card [5];
@@ -31,8 +32,9 @@ public class BlackJack
 	
 	
 	
-	private void playGame()
+	public void playGame()
 	{
+		this.deckID = parse.getNewDeck();
 		addCardsToDeck();
 		generateHands();
 		
@@ -41,7 +43,6 @@ public class BlackJack
 	
 	public void generateHands()
 	{
-		shuffleCards(deckID);
 		
 		for (int index = 0; index < playerCards.length; index++)
 		{
@@ -73,6 +74,16 @@ public class BlackJack
 		{
 			playingCards [index] = parse.getCard(deckID);
 		}
+	}
+	
+	public Card [] getPlayerCards()
+	{
+		return playerCards;
+	}
+	
+	public Card [] getDealerCards()
+	{
+		return dealerCards;
 	}
 	
 	private String getPlayerCardValue(int index)

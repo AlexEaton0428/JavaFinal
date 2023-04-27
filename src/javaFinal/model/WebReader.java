@@ -8,16 +8,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javaFinal.controller.Controller;
 
 public class WebReader
 {
 	
-private Controller controller;
-	
-	public WebReader(Controller controller)
+	public WebReader()
 	{
-		this.controller = controller;
+		
 	}
 	
 	public String getInfo(String newURL)
@@ -45,11 +42,11 @@ private Controller controller;
 	     
 		catch (MalformedURLException error) 
 		{
-	        controller.handleError(error);
+	        error.printStackTrace();
 	    } 
 		catch (IOException error) 
 		{
-			controller.handleError(error);
+			error.printStackTrace();
 	    }
 		
 		
