@@ -44,4 +44,11 @@ public class Card
 	{
 		this.image = newImageFile;
 	}
+	
+	public String toString()
+	{
+		String card = "This is a " + this.value + " of " + this.suit + " with a image codeo of" + this.image;
+		
+		return card;
+	}
 }

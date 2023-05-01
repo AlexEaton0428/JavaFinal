@@ -40,6 +40,8 @@ public class JsonToNot
 	        String code = codeNode.asText();
 	        
 	        this.card = new Card(value, suit, code);
+	        
+	 
 		}
 		catch (IOException error)
 		{

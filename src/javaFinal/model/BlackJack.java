@@ -50,34 +50,37 @@ public class BlackJack
 		
 		for (int index = 0; index < playerCards.length; index++)
 		{
-			playerCards[index] = drawCard();
+			playerCards[index] = drawCard(index);
 		}
 		
 		for (int index = 0; index < dealerCards.length; index++)
 		{
-			dealerCards[index] = drawCard();
+			dealerCards[index] = drawCard(index + 7);
 		}
 	}
 	
-	public Card drawCard()
+	public Card drawCard(int index)
 	{
 		
-		Random number = new Random();
-		int low = 0;
-		int high = this.playerCards.length - 1;
-		int result = number.nextInt(high-low) + low;
+//		Random number = new Random();
+//		int low = 0;
+//		int high = this.playingCards.length - 1;
+//		int result = number.nextInt(high-low) + low;
+//		
+		Card newCard = playingCards[index];
 		
-		Card newCard = playingCards[result];
 		
 		return newCard;
 	}
 	
 	public void addCardsToDeck()
 	{
-		for (int index = 0; index < playingCards.length; index++)
+			
+		for (int index = 0; index < playingCards.length -1; index++)
 		{
 			playingCards [index] = parse.getCard(deckID);
 		}
+		
 	}
 	
 	public Card [] getPlayerCards()
@@ -90,7 +93,7 @@ public class BlackJack
 		return dealerCards;
 	}
 	
-	private String getPlayerCardValue(int index)
+	public String getPlayerCardValue(int index)
 	{
 		return playerCards[index].getValue();
 	}
@@ -100,18 +103,19 @@ public class BlackJack
 		return dealerCards[index].getValue();
 	}
 	
-	private int getIntCardValue(int cardIndex)
+	public int getIntCardValue(int cardIndex, int aceValue)
 	{
 		int value = 0;
 		String stringValue = getPlayerCardValue(cardIndex);
 		
-		if (stringValue.contains("K") || stringValue.contains("Q") || stringValue.contains("J")) 
+		if (stringValue.contains("K") || stringValue.contains("Q") 
+				|| stringValue.contains("J") || stringValue.contains("0")) 
 		{
 			value = 10;
 		}
 		else if (stringValue.contains("A"))
 		{
-			
+			value = aceValue;
 		}
 		else
 		{
@@ -122,25 +126,25 @@ public class BlackJack
 		
 	}
 	
-	private int stand(int cardsOut)
+	public int stand(int cardsOut, int aceValue)
 	{
 		if (cardsOut == 2)
 		{
-			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1);
+			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue);
 		}
 		else if (cardsOut == 3)
 		{
-			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2);
+			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue);
 		}
 		else if (cardsOut == 4)
 		{
-			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2) +
-					+ getIntCardValue(3);
+			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue) +
+					+ getIntCardValue(3, aceValue);
 		}
 		else if (cardsOut == 5)
 		{
-			this.cardsCombined = getIntCardValue(0) + getIntCardValue(1) + getIntCardValue(2) +
-					+ getIntCardValue(3) + + getIntCardValue(4);
+			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue) +
+					+ getIntCardValue(3, aceValue) + + getIntCardValue(4, aceValue);
 		}
 		
 		return this.cardsCombined;
