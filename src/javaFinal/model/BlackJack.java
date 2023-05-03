@@ -16,6 +16,8 @@ public class BlackJack
 	
 	private int cardsCombined;
 	
+	private int dealerCardsCombined;
+	
 	
 	public BlackJack()
 	{
@@ -31,6 +33,7 @@ public class BlackJack
 		this.dealerCards = new Card [5];
 		
 		this.cardsCombined = 0;
+		this.dealerCardsCombined = 0;
 		
 	}
 	
@@ -61,14 +64,7 @@ public class BlackJack
 	
 	public Card drawCard(int index)
 	{
-		
-//		Random number = new Random();
-//		int low = 0;
-//		int high = this.playingCards.length - 1;
-//		int result = number.nextInt(high-low) + low;
-//		
 		Card newCard = playingCards[index];
-		
 		
 		return newCard;
 	}
@@ -103,7 +99,7 @@ public class BlackJack
 		return dealerCards[index].getValue();
 	}
 	
-	public int getIntCardValue(int cardIndex, int aceValue)
+	public int getIntPlayer(int cardIndex, int aceValue)
 	{
 		int value = 0;
 		String stringValue = getPlayerCardValue(cardIndex);
@@ -126,29 +122,79 @@ public class BlackJack
 		
 	}
 	
-	public int stand(int cardsOut, int aceValue)
+	public int getIntDealer(int cardIndex, int aceValue)
 	{
+		int value = 0;
+		String stringValue = getDealerCardValue(cardIndex);
+		
+		if (stringValue.contains("K") || stringValue.contains("Q") 
+				|| stringValue.contains("J") || stringValue.contains("0")) 
+		{
+			value = 10;
+		}
+		else if (stringValue.contains("A"))
+		{
+			value = aceValue;
+		}
+		else
+		{
+			value = Integer.parseInt(stringValue.substring(0));
+		}
+		
+		return value;
+		
+	}
+	
+	public int playerTotal(int cardsOut, int aceValue)
+	{
+		
 		if (cardsOut == 2)
 		{
-			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue);
+			this.cardsCombined = getIntDealer(0, aceValue) + getIntPlayer(1, aceValue);
 		}
 		else if (cardsOut == 3)
 		{
-			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue);
+			this.cardsCombined = getIntPlayer(0, aceValue) + getIntPlayer(1, aceValue) + getIntPlayer(2, aceValue);
 		}
 		else if (cardsOut == 4)
 		{
-			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue) +
-					+ getIntCardValue(3, aceValue);
+			this.cardsCombined = getIntPlayer(0, aceValue) + getIntPlayer(1, aceValue) + getIntPlayer(2, aceValue) + getIntPlayer(3, aceValue);
 		}
 		else if (cardsOut == 5)
 		{
-			this.cardsCombined = getIntCardValue(0, aceValue) + getIntCardValue(1, aceValue) + getIntCardValue(2, aceValue) +
-					+ getIntCardValue(3, aceValue) + + getIntCardValue(4, aceValue);
+			this.cardsCombined =getIntPlayer(0, aceValue) + getIntPlayer(1, aceValue) + getIntPlayer(2, aceValue) + getIntPlayer(4, aceValue);
 		}
+		
 		
 		return this.cardsCombined;
 	}
+	
+	
+	public int dealerTotal(int cardsOut, int aceValue)
+	{
+		
+		if (cardsOut == 2)
+		{
+			this.dealerCardsCombined = getIntDealer(0, aceValue) + getIntDealer(1, aceValue);
+		}
+		else if (cardsOut == 3)
+		{
+			this.dealerCardsCombined = getIntDealer(0, aceValue) + getIntDealer(1, aceValue) + getIntDealer(2, aceValue);
+		}
+		else if (cardsOut == 4)
+		{
+			this.dealerCardsCombined = getIntDealer(0, aceValue) + getIntDealer(1, aceValue) + getIntDealer(2, aceValue) + getIntDealer(3, aceValue);
+		}
+		else if (cardsOut == 5)
+		{
+			this.dealerCardsCombined =getIntDealer(0, aceValue) + getIntDealer(1, aceValue) + getIntDealer(2, aceValue) + getIntDealer(4, aceValue);
+		}
+		
+		
+		
+		return this.dealerCardsCombined;
+	}
+	
 	
 	 
 	
