@@ -39,6 +39,7 @@ public class GamePanel extends JPanel
 	private JButton hitButton;
 	private JButton aceValue;
 	private JButton resetButton;
+	private JButton winButton;
 	
 	private SpringLayout layout;
 	private JPanel buttonPanel;
@@ -73,6 +74,9 @@ public class GamePanel extends JPanel
 	private JLabel cardsValue;
 	private JLabel dealerCardsValue;
 	
+	private JPanel winPanel;
+	private JLabel winLoss;
+	
 	
 	
 	public GamePanel(Controller controller)
@@ -89,7 +93,12 @@ public class GamePanel extends JPanel
 		this.dealerCardIndex = 2;
 		this.playerTurn = true;
 		this.ace = 1;
-				
+		this.dealerAce = 1;
+		this.dealerCardsValue = new JLabel("");
+		this.winLoss = new JLabel("");
+		this.cardsValue = new JLabel("");
+		
+		this.winPanel = new JPanel(new GridLayout(1,0));
 		this.buttonPanel = new JPanel(new GridLayout(1,0));
 		this.playerCards = new JPanel(new GridLayout(1,0));
 		this.dealerCards = new JPanel(new GridLayout(1,0));
@@ -97,9 +106,10 @@ public class GamePanel extends JPanel
 		this.hitButton = new JButton("HIT");
 		this.standButton = new JButton("STAND");
 		this.resetButton = new JButton("RESET GAME");
-		this.aceValue = new JButton("Default Ace value is 1, click to change to 11");
-		this.cardsValue = new JLabel("");
-		this.dealerCardsValue = new JLabel("");
+		this.winButton = new JButton("END GAME");
+		this.aceValue = new JButton("Change Ace to 11");
+		
+		
 		
 		this.pCardLabelOne = null;
 		this.pCardLabelTwo = null;
@@ -140,23 +150,27 @@ public class GamePanel extends JPanel
 	private void setupPanel()
 	{
 		this.setLayout(layout);
+		this.add(winButton);
 		this.add(buttonPanel);
 		this.add(dealerCards);
 		this.add(playerCards);
 		
-		this.buttonPanel.add(resetButton);
 		
 		this.add(cardsValue);
 		//this.add(dealerCardsValue);
 		this.cardsValue.setFont(new Font("Verdana", 1, 20));
 		//this.dealerCardsValue.setFont(new Font("Verdana", 1, 20));
 		
+		this.winLoss.setFont(new Font("Verdana", 1, 30));
 	}
 	
 	private void setupLayout()
 	{
-		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 150, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.WEST, buttonPanel, 150, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 500, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, buttonPanel, 550, SpringLayout.WEST, this);
+		
+		layout.putConstraint(SpringLayout.NORTH, winPanel, 400, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, winPanel, 550, SpringLayout.WEST, this);
 		
 		layout.putConstraint(SpringLayout.NORTH, playerCards, 700, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, playerCards, 400, SpringLayout.WEST, this);
@@ -166,6 +180,9 @@ public class GamePanel extends JPanel
 		
 		layout.putConstraint(SpringLayout.NORTH, cardsValue, 650, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, cardsValue, 400, SpringLayout.WEST, this);
+		
+//		layout.putConstraint(SpringLayout.NORTH, winLoss, 500, SpringLayout.NORTH, this);
+//		layout.putConstraint(SpringLayout.WEST, winLoss, 500, SpringLayout.WEST, this);
 
 //		layout.putConstraint(SpringLayout.NORTH, dealerCardsValue, 400, SpringLayout.NORTH, this);
 //		layout.putConstraint(SpringLayout.WEST, dealerCardsValue, 400, SpringLayout.WEST, this);
@@ -176,8 +193,9 @@ public class GamePanel extends JPanel
 	{
 		hitButton.addActionListener( click -> hit());
 		aceValue.addActionListener( click -> changeAce());
-		standButton.addActionListener( click -> standing());
+		standButton.addActionListener( click -> stand());
 		resetButton.addActionListener( click -> resetGame());
+		winButton.addActionListener( click -> winOrLoss());
 	}
 	
 	private void playGame()
@@ -186,6 +204,8 @@ public class GamePanel extends JPanel
 		this.playerHand = game.getPlayerCards();
 		this.dealerHand = game.getDealerCards();
 		updateScreen();
+		
+		this.repaint();
 	}
 	
 	private void updateScreen()
@@ -263,7 +283,8 @@ public class GamePanel extends JPanel
 		
 		
 		changeCardsValue(1);
-		
+		this.repaint();
+		repaintAll();
 	}
 	
 	private void hit()
@@ -343,15 +364,28 @@ public class GamePanel extends JPanel
 			}
 		}
 		
-			
+		repaintAll();
 			
 		
 	}
 	
 	private void standing()
 	{
+		
+		for (int index = 0; index <= cardIndex; index++)
+		{
+			if (playerHand[index].getImage().contains("A"))
+			{
+				buttonPanel.add(aceValue);
+				buttonPanel.repaint();
+			}
+		}
+		
+		this.repaint();
+		
 		if (this.dealerCardIndex == 2)
 		{
+			
 			
 			String dealerCardTwo = dealerHand[1].getImage();
 			System.out.println("dealer card 2 " + dealerCardTwo);
@@ -400,23 +434,62 @@ public class GamePanel extends JPanel
 			changeCardsValue(2);
 		}
 		
+		boolean aceCondition = false;
 		
+		for (int index = 0; index <= dealerCardIndex; index++)
+		{
+			if (dealerHand[index].getImage().contains("A"))
+			{
+				aceCondition = true;
+			}
+		}
+		
+		if (game.dealerTotal(dealerCardIndex, 11) <= 21 && aceCondition)
+		{
+			dealerAce = 11;
+		}
+		
+		this.buttonPanel.add(winButton);
+		buttonPanel.repaint();
 		this.dealerCardIndex += 1;
 		dealerCards.repaint();
-		this.repaint();
+		dealerCards.revalidate();
+		repaintAll();
 	}
 	
 	private void changeAce()
 	{
-		this.ace = 11;
-		changeCardsValue(1);
-		cardsValue.repaint();
+		if (ace == 1)
+		{
+			this.ace = 11;
+			changeCardsValue(1);
+			cardsValue.repaint();
+			
+			aceValue.setText("Change ace to 1");
+			buttonPanel.repaint();
+		}
+		else
+		{
+			this.ace = 1;
+			changeCardsValue(1);
+			cardsValue.repaint(1);
+			
+			aceValue.setText("Change ace to 11");
+			buttonPanel.repaint();
+		}
+		buttonPanel.revalidate();
+		repaintAll();
 	}
 	private void changeDealerAce()
 	{
 		dealerAce = 11;
 		changeCardsValue(2);
 		cardsValue.repaint();
+		
+		if (game.playerTotal(cardIndex, ace) > 21)
+		{
+			cardsValue.setText("Bust! " + game.playerTotal(cardIndex, ace));
+		}
 	}
 	private void changeCardsValue(int deck)
 	{
@@ -426,11 +499,13 @@ public class GamePanel extends JPanel
 		}
 		else if (deck == 2)
 		{
-			dealerCardsValue.setText("Dealer Cards total " + game.dealerTotal(dealerCardIndex, ace));
+			dealerCardsValue.setText("Dealer Cards total " + game.dealerTotal(dealerCardIndex, dealerAce));
 		}
 		
 		cardsValue.repaint();
 		dealerCardsValue.repaint();
+		
+		repaintAll();
 	}
 	
 	private void resetGame()
@@ -444,6 +519,8 @@ public class GamePanel extends JPanel
 		this.playerTurn = true;
 		this.ace = 1;
 		
+		winPanel.remove(winLoss);
+		buttonPanel.remove(resetButton);
 		playerCards.removeAll();
 		dealerCards.removeAll();
 		
@@ -453,4 +530,56 @@ public class GamePanel extends JPanel
 		this.repaint();
 	}
 	
+	private void stand()
+	{
+		standing();
+		dealerCards.repaint();
+		this.repaint();
+	}
+	
+	private void winOrLoss()
+	{
+		int pTotal = game.playerTotal(cardIndex, ace);
+		int dTotal = game.dealerTotal(dealerCardIndex, dealerAce);
+		
+		cardsValue.setText("This isnt working right");
+		
+		if (pTotal > 21)
+		{
+			cardsValue.setText("Sorry You Lost! : Play Again!");
+		}
+		
+		else if (dTotal == pTotal)
+		{
+			cardsValue.setText("Sorry You Tied! : Play Again!");
+		}
+		
+		else if(dTotal <= 21 && pTotal <= 21)
+		{
+			if (pTotal < dTotal)
+			{
+				cardsValue.setText("Sorry You Lost! : Play Again!");
+			}
+			else if(dTotal < pTotal)
+			{
+				cardsValue.setText("You Won! : Play Again!");
+			}
+		}
+		
+
+		this.buttonPanel.removeAll();
+		
+		cardsValue.repaint();
+		this.buttonPanel.add(resetButton);
+		repaintAll();
+	}
+	
+	private void repaintAll()
+	{
+		winPanel.repaint();
+		buttonPanel.repaint();
+		playerCards.repaint();
+		dealerCards.repaint();
+		this.repaint();
+	}
 }
