@@ -45,7 +45,7 @@ public class Controller
 	
 	public void play()
 	{
-		window.replaceScreen("Game");
+
 	}
 	
 	

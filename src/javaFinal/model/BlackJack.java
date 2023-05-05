@@ -150,7 +150,7 @@ public class BlackJack
 		
 		if (cardsOut == 2)
 		{
-			this.cardsCombined = getIntDealer(0, aceValue) + getIntPlayer(1, aceValue);
+			this.cardsCombined = getIntPlayer(0, aceValue) + getIntPlayer(1, aceValue);
 		}
 		else if (cardsOut == 3)
 		{
@@ -168,8 +168,7 @@ public class BlackJack
 		
 		return this.cardsCombined;
 	}
-	
-	
+		
 	public int dealerTotal(int cardsOut, int aceValue)
 	{
 		

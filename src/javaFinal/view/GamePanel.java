@@ -107,9 +107,7 @@ public class GamePanel extends JPanel
 		this.standButton = new JButton("STAND");
 		this.resetButton = new JButton("RESET GAME");
 		this.winButton = new JButton("END GAME");
-		this.aceValue = new JButton("Change Ace to 11");
-		
-		
+		this.aceValue = new JButton("CHANGE ACE TO 11");
 		
 		this.pCardLabelOne = null;
 		this.pCardLabelTwo = null;
@@ -138,29 +136,23 @@ public class GamePanel extends JPanel
 		this.hiddenCardLabel = null;
 		this.hiddenCardImage = null;
 		
-		
 		playGame();
 		setupPanel();
 		setupLayout();
 		setupListeners();
-		
 		
 	}
 	
 	private void setupPanel()
 	{
 		this.setLayout(layout);
-		this.add(winButton);
 		this.add(buttonPanel);
 		this.add(dealerCards);
 		this.add(playerCards);
 		
 		
 		this.add(cardsValue);
-		//this.add(dealerCardsValue);
 		this.cardsValue.setFont(new Font("Verdana", 1, 20));
-		//this.dealerCardsValue.setFont(new Font("Verdana", 1, 20));
-		
 		this.winLoss.setFont(new Font("Verdana", 1, 30));
 	}
 	
@@ -180,13 +172,6 @@ public class GamePanel extends JPanel
 		
 		layout.putConstraint(SpringLayout.NORTH, cardsValue, 650, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, cardsValue, 400, SpringLayout.WEST, this);
-		
-//		layout.putConstraint(SpringLayout.NORTH, winLoss, 500, SpringLayout.NORTH, this);
-//		layout.putConstraint(SpringLayout.WEST, winLoss, 500, SpringLayout.WEST, this);
-
-//		layout.putConstraint(SpringLayout.NORTH, dealerCardsValue, 400, SpringLayout.NORTH, this);
-//		layout.putConstraint(SpringLayout.WEST, dealerCardsValue, 400, SpringLayout.WEST, this);
-		
 	}
 	
 	private void setupListeners()
@@ -203,6 +188,10 @@ public class GamePanel extends JPanel
 		game.playGame();
 		this.playerHand = game.getPlayerCards();
 		this.dealerHand = game.getDealerCards();
+		this.cardIndex = 2;
+		this.dealerCardIndex = 2;
+		changeCardsValue(1);
+		changeCardsValue(2);
 		updateScreen();
 		
 		this.repaint();
@@ -219,24 +208,13 @@ public class GamePanel extends JPanel
 		
 		String playerCardOne = playerHand[0].getImage(); 
 		String playerCardTwo = playerHand[1].getImage();
-		
-		
-		String playerCardFive = playerHand[4].getImage();
-		
 		String dealerCardOne = dealerHand[0].getImage(); 
+	
+		changeCardsValue(1);
 		
-//		String dealerCardThree = dealerHand[2].getImage();
-//		String dealerCardFour = dealerHand[3].getImage();
-//		String dealerCardFive = dealerHand[4].getImage();
-		
-		
-		
-		
-		System.out.println(playerCardOne);
 		try
 		{
 			pCardImageOne = ImageIO.read(new File("Cards/" + playerCardOne + ".png"));
-			
 			pCardLabelOne = new JLabel(new ImageIcon(pCardImageOne));
 			this.playerCards.add(pCardLabelOne);
 		}
@@ -244,11 +222,10 @@ public class GamePanel extends JPanel
 		{
 			error.printStackTrace();
 		}
-		System.out.println(playerCardTwo);
+		
 		try
 		{
 			pCardImageTwo = ImageIO.read(new File("Cards/" + playerCardTwo + ".png"));
-			
 			pCardLabelTwo = new JLabel(new ImageIcon(pCardImageTwo));
 			this.playerCards.add(pCardLabelTwo);
 		}
@@ -256,10 +233,9 @@ public class GamePanel extends JPanel
 		{
 			error.printStackTrace();
 		}
-		System.out.println("dealer one" + dealerCardOne);
+		
 		try
 		{
-		
 			dCardImageOne = ImageIO.read(new File("Cards/" + dealerCardOne + ".png"));
 			dCardLabelOne = new JLabel(new ImageIcon(dCardImageOne));
 			this.dealerCards.add(dCardLabelOne);
@@ -280,11 +256,8 @@ public class GamePanel extends JPanel
 			error.printStackTrace();
 		}
 		
-		
-		
-		changeCardsValue(1);
 		this.repaint();
-		repaintAll();
+		cardsValue.repaint();
 	}
 	
 	private void hit()
@@ -347,6 +320,16 @@ public class GamePanel extends JPanel
 			
 			
 			this.cardIndex += 1;
+			
+			for (int index = 1; index <= cardIndex; index++)
+			{
+				if (playerHand[index - 1].getImage().contains("A"))
+				{
+					buttonPanel.add(aceValue);
+					buttonPanel.repaint();
+				}
+			}
+			
 			playerCards.repaint();
 			this.repaint();
 			changeCardsValue(1);
@@ -372,14 +355,7 @@ public class GamePanel extends JPanel
 	private void standing()
 	{
 		
-		for (int index = 0; index <= cardIndex; index++)
-		{
-			if (playerHand[index].getImage().contains("A"))
-			{
-				buttonPanel.add(aceValue);
-				buttonPanel.repaint();
-			}
-		}
+		
 		
 		this.repaint();
 		
@@ -405,14 +381,8 @@ public class GamePanel extends JPanel
 			{
 				error.printStackTrace();
 			}
-			if (dealerHand[0].getImage().contains("A") || dealerHand[1].getImage().contains("A"))
-			{
-				if (game.dealerTotal(cardIndex, 11) <= 21)
-				{
-					dealerAce = 11;
-				}
-			}
-			else if (game.dealerTotal(cardIndex, dealerAce) <= 18)
+			
+			if (game.dealerTotal(cardIndex, dealerAce) <= 18)
 			{
 				String dealerCardThree = dealerHand[2].getImage();
 				System.out.println("dealer card 3 " + dealerCardThree);
@@ -430,6 +400,26 @@ public class GamePanel extends JPanel
 				{
 					error.printStackTrace();
 				}
+				
+				
+				if (game.dealerTotal(cardIndex, dealerAce) <= 18)
+				{
+					String dealerCardFour = dealerHand[3].getImage();
+					System.out.println("dealer card 4 " + dealerCardThree);
+					
+					try
+					{
+						dCardImageFour = ImageIO.read(new File("Cards/" + dealerCardFour + ".png"));
+						dCardLabelFour = new JLabel(new ImageIcon(dCardImageFour));
+						this.dealerCards.add(dCardLabelFour);
+						
+						dealerCards.repaint();
+					}
+					catch (IOException error)
+					{
+						error.printStackTrace();
+					}
+				}
 			}
 			changeCardsValue(2);
 		}
@@ -446,12 +436,14 @@ public class GamePanel extends JPanel
 		
 		if (game.dealerTotal(dealerCardIndex, 11) <= 21 && aceCondition)
 		{
-			dealerAce = 11;
+			changeDealerAce();
 		}
 		
-		this.buttonPanel.add(winButton);
-		buttonPanel.repaint();
 		this.dealerCardIndex += 1;
+		
+		this.buttonPanel.add(winButton);
+		
+		buttonPanel.repaint();
 		dealerCards.repaint();
 		dealerCards.revalidate();
 		repaintAll();
@@ -465,7 +457,7 @@ public class GamePanel extends JPanel
 			changeCardsValue(1);
 			cardsValue.repaint();
 			
-			aceValue.setText("Change ace to 1");
+			aceValue.setText("CHANGE ACE TO 1");
 			buttonPanel.repaint();
 		}
 		else
@@ -474,23 +466,21 @@ public class GamePanel extends JPanel
 			changeCardsValue(1);
 			cardsValue.repaint(1);
 			
-			aceValue.setText("Change ace to 11");
+			aceValue.setText("CHANGE ACE TO 11");
 			buttonPanel.repaint();
 		}
 		buttonPanel.revalidate();
 		repaintAll();
 	}
+	
 	private void changeDealerAce()
 	{
 		dealerAce = 11;
 		changeCardsValue(2);
 		cardsValue.repaint();
 		
-		if (game.playerTotal(cardIndex, ace) > 21)
-		{
-			cardsValue.setText("Bust! " + game.playerTotal(cardIndex, ace));
-		}
 	}
+	
 	private void changeCardsValue(int deck)
 	{
 		if (deck == 1)
@@ -514,8 +504,7 @@ public class GamePanel extends JPanel
 		this.game = new BlackJack();
 		this.playerHand = null;
 		this.dealerHand = null;
-		this.cardIndex = 2;
-		this.dealerCardIndex = 2;
+		
 		this.playerTurn = true;
 		this.ace = 1;
 		
@@ -525,8 +514,7 @@ public class GamePanel extends JPanel
 		dealerCards.removeAll();
 		
 		playGame();
-		changeCardsValue(1);
-		changeCardsValue(2);
+		
 		this.repaint();
 	}
 	
@@ -542,7 +530,7 @@ public class GamePanel extends JPanel
 		int pTotal = game.playerTotal(cardIndex, ace);
 		int dTotal = game.dealerTotal(dealerCardIndex, dealerAce);
 		
-		cardsValue.setText("This isnt working right");
+		cardsValue.setText("This isnt working right player total is: " + pTotal + dTotal);
 		
 		if (pTotal > 21)
 		{
@@ -564,6 +552,11 @@ public class GamePanel extends JPanel
 			{
 				cardsValue.setText("You Won! : Play Again!");
 			}
+		}
+		
+		else if (dTotal > 21 && pTotal <= 21)
+		{
+			cardsValue.setText("You Won! : Play Again!");
 		}
 		
 
