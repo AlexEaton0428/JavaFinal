@@ -33,8 +33,6 @@ public class Controller
 	public void start()
 	{
 		
-		
-		
 	}
 	
 	public void handleError(Exception error)

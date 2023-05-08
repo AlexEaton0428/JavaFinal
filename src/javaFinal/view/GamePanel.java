@@ -256,6 +256,15 @@ public class GamePanel extends JPanel
 			error.printStackTrace();
 		}
 		
+		for (int index = 1; index <= cardIndex; index++)
+		{
+			if (playerHand[index - 1].getImage().contains("A"))
+			{
+				buttonPanel.add(aceValue);
+				buttonPanel.repaint();
+			}
+		}
+		
 		this.repaint();
 		cardsValue.repaint();
 	}
