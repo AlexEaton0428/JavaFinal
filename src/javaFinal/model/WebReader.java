@@ -17,6 +17,7 @@ public class WebReader
 		
 	}
 	
+	// Uses accesses the web API and returns the data from it. Takes the URL as a parameter
 	public String getInfo(String newURL)
 	{
 		String info = "";

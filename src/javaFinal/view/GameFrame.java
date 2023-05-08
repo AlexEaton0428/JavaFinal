@@ -14,6 +14,7 @@ public class GameFrame extends JFrame
 	
 	private Controller controller;
 	
+	// Initializes instances of controller and gamePanel
 	public GameFrame(Controller controller)
 	{
 		
@@ -26,6 +27,7 @@ public class GameFrame extends JFrame
 		
 	}
 	
+	// sets up the window for the game
 	private void setupFrame()
 	{
 		this.setSize(1750, 1225);

@@ -12,39 +12,29 @@ import javaFinal.model.WebReader;
 public class Controller
 {
 	private GameFrame window;
-	private BlackJack game;
-	private JsonToNot parse;
-	private WebReader reader;
-	private String deckID;
 	
+	
+	// Initializes instance of GameFrame as window
 	public Controller()
 	{
-		this.deckID = "";
-		
 		this.window = new GameFrame(this);
-	
-		this.game = new BlackJack();
-		
-		this.parse = new JsonToNot();
-		
-		this.reader = new WebReader();
 	}
 	
+	// Empty
 	public void start()
 	{
 		
 	}
 	
+	// Used for error handling throughout project
 	public void handleError(Exception error)
 	{
 		JOptionPane.showMessageDialog(window, error.getMessage(), "Oops!", JOptionPane.ERROR_MESSAGE);
 		
 	}
-	
-	public void play()
-	{
 
-	}
+
+	
 	
 	
 }
