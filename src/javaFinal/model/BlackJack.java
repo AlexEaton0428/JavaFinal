@@ -18,11 +18,9 @@ public class BlackJack
 	
 	private int dealerCardsCombined;
 	
-	
+	// Initializes new instance of the JsonToNot class, initializes card deck arrays and other data members
 	public BlackJack()
 	{
-		
-		
 		this.parse = new JsonToNot();
 		
 		// official deck ID
@@ -34,11 +32,10 @@ public class BlackJack
 		
 		this.cardsCombined = 0;
 		this.dealerCardsCombined = 0;
-		
 	}
 	
 	
-	
+	// Gets new deckID from JsonToNot class, adds cards to main deck, adds cards from the main deck to player and dealer hands
 	public void playGame()
 	{
 		this.deckID = parse.getNewDeck();
@@ -47,7 +44,7 @@ public class BlackJack
 		
 	}
 	
-	
+	// Draws card from deck for every open slot in the player and dealer hands
 	public void generateHands()
 	{
 		
@@ -62,6 +59,7 @@ public class BlackJack
 		}
 	}
 	
+	// returns a card from the main card deck. Takes index as a parameter - this insures that the same cards are not getting drawn
 	public Card drawCard(int index)
 	{
 		Card newCard = playingCards[index];
@@ -69,6 +67,7 @@ public class BlackJack
 		return newCard;
 	}
 	
+	// Fills main card deck with cards created by the JsonToNot getCard method
 	public void addCardsToDeck()
 	{
 			
@@ -79,26 +78,32 @@ public class BlackJack
 		
 	}
 	
+	// Returns the playerHand array
 	public Card [] getPlayerCards()
 	{
 		return playerCards;
 	}
 	
+	// Returns the dealerHand array
 	public Card [] getDealerCards()
 	{
 		return dealerCards;
 	}
 	
+	// Uses the getValue method from Card to get the value of a specified card in a the player deck. Takes index as a parameter to choose which card
 	public String getPlayerCardValue(int index)
 	{
 		return playerCards[index].getValue();
 	}
 	
+	// Uses the getValue method from Card to get the value of a specified card in a the dealer deck. Takes index as a parameter to choose which card
 	private String getDealerCardValue(int index)
 	{
 		return dealerCards[index].getValue();
 	}
 	
+	// Turns the String value of a player card into an integer based on the rules of Black Jack
+	// Takes the card index and value of the ace as parameters
 	public int getIntPlayer(int cardIndex, int aceValue)
 	{
 		int value = 0;
@@ -122,6 +127,8 @@ public class BlackJack
 		
 	}
 	
+	// Turns the String value of a dealer card into an integer based on the rules of Black Jack
+	// Takes the card index and value of the ace as parameters
 	public int getIntDealer(int cardIndex, int aceValue)
 	{
 		int value = 0;
@@ -145,6 +152,7 @@ public class BlackJack
 		
 	}
 	
+	// Totals the values of each card in the player hand based on how many are being used. Takes cardsOut and the value of an ace as parameters
 	public int playerTotal(int cardsOut, int aceValue)
 	{
 		
@@ -168,7 +176,8 @@ public class BlackJack
 		
 		return this.cardsCombined;
 	}
-		
+	
+	// Totals the values of each card in the dealer hand based on how many are being used. Takes cardsOut and the value of an ace as parameters
 	public int dealerTotal(int cardsOut, int aceValue)
 	{
 		

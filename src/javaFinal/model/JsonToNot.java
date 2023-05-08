@@ -13,12 +13,13 @@ public class JsonToNot
 	private Card card;
 	private String deckID;
 
-	
+	// Initializes new instance of WebReader as reader
 	public JsonToNot() 
 	{
 		this.reader = new WebReader();
 	}
 	
+	// Takes a DeckID as a parameter. Uses WebReader to get individual Card information from the API and creates a Card object with it
 	public Card getCard(String thisDeckID)
 	{
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -54,6 +55,7 @@ public class JsonToNot
 
 	}
 	
+	// Uses WebReader to get a new DeckID from the API
 	public String getNewDeck()
 	{
 		ObjectMapper objectMapper = new ObjectMapper();

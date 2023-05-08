@@ -78,7 +78,7 @@ public class GamePanel extends JPanel
 	private JLabel winLoss;
 	
 	
-	
+	// Initializes all data members needed and calls the setup methods
 	public GamePanel(Controller controller)
 	{
 		super();
@@ -143,6 +143,7 @@ public class GamePanel extends JPanel
 		
 	}
 	
+	// Adds required buttons and panels to the screen
 	private void setupPanel()
 	{
 		this.setLayout(layout);
@@ -156,6 +157,7 @@ public class GamePanel extends JPanel
 		this.winLoss.setFont(new Font("Verdana", 1, 30));
 	}
 	
+	// Sets the layout for the components on the screen
 	private void setupLayout()
 	{
 		layout.putConstraint(SpringLayout.NORTH, buttonPanel, 500, SpringLayout.NORTH, this);
@@ -174,6 +176,7 @@ public class GamePanel extends JPanel
 		layout.putConstraint(SpringLayout.WEST, cardsValue, 400, SpringLayout.WEST, this);
 	}
 	
+	// Sets the actions taken by the buttons when clicked
 	private void setupListeners()
 	{
 		hitButton.addActionListener( click -> hit());
@@ -183,6 +186,8 @@ public class GamePanel extends JPanel
 		winButton.addActionListener( click -> winOrLoss());
 	}
 	
+	// Calls the playGame function from the BlackJack class, fills the dealer/player hands with cards, sets the card indexes, and updates the combined card values
+	// Also calls the updateScreen method
 	private void playGame()
 	{
 		game.playGame();
@@ -197,6 +202,7 @@ public class GamePanel extends JPanel
 		this.repaint();
 	}
 	
+	// Adds initial card images to the screen and updates the combined card values
 	private void updateScreen()
 	{
 		
@@ -269,6 +275,7 @@ public class GamePanel extends JPanel
 		cardsValue.repaint();
 	}
 	
+	// Adds new Card images when called and updates combined card values
 	private void hit()
 	{
 		if (game.playerTotal(cardIndex, ace) <= 21)
@@ -361,6 +368,7 @@ public class GamePanel extends JPanel
 		
 	}
 	
+	// Gets rid of hit button and puts dealer cards on screen
 	private void standing()
 	{
 		
@@ -458,6 +466,7 @@ public class GamePanel extends JPanel
 		repaintAll();
 	}
 	
+	// Changes the player ace value
 	private void changeAce()
 	{
 		if (ace == 1)
@@ -482,6 +491,7 @@ public class GamePanel extends JPanel
 		repaintAll();
 	}
 	
+	// Changes the dealer ace value
 	private void changeDealerAce()
 	{
 		dealerAce = 11;
@@ -490,6 +500,7 @@ public class GamePanel extends JPanel
 		
 	}
 	
+	// Changes the combined card values on the screen by calling functions in the BlackJack class. Takes deck as a parameter which decides which deck values to change
 	private void changeCardsValue(int deck)
 	{
 		if (deck == 1)
@@ -507,6 +518,7 @@ public class GamePanel extends JPanel
 		repaintAll();
 	}
 	
+	// Resets relevant data members to original values, removes ending and reset buttons, and recalls playGame
 	private void resetGame()
 	{
 		this.deckID = "";
@@ -527,6 +539,7 @@ public class GamePanel extends JPanel
 		this.repaint();
 	}
 	
+	// Calls standing and repaints the dealer cards
 	private void stand()
 	{
 		standing();
@@ -534,6 +547,7 @@ public class GamePanel extends JPanel
 		this.repaint();
 	}
 	
+	// Checks if the player won or loss based on the card values added together
 	private void winOrLoss()
 	{
 		int pTotal = game.playerTotal(cardIndex, ace);
@@ -576,6 +590,7 @@ public class GamePanel extends JPanel
 		repaintAll();
 	}
 	
+	// Repaints all components
 	private void repaintAll()
 	{
 		winPanel.repaint();

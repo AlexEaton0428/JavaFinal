@@ -7,6 +7,7 @@ public class Card
 	private String suit;
 	private String image;
 	
+	// Takes value, suit, and image as parameters. Image is a two digit code used for images and for integer values
 	public Card(String newValue, String newSuit, String newImage)
 	{
 		this.suit = newSuit;
