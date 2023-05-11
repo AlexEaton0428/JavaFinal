@@ -47,7 +47,8 @@
 + setValue(newValue : String)
 + setImage(newImageFile : String)
 + toString() : String
-</panel_attributes>
+
+bg=ORANGE</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -66,7 +67,8 @@
 --
 + getCard(thisDeckID : String) : String
 + getNewDeck() : String
-</panel_attributes>
+
+bg=RED</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -82,7 +84,8 @@
 - nothing
 --
 + getInfo(newURL : String) : String
-</panel_attributes>
+
+bg=MAGENTA</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -114,7 +117,8 @@
 + getIntPlayer(cardIndex : int, aceValue : int) : int
 + getIntDealer(cardIndex : int, aceValue : int) : int
 + playerTotal(cardsOut : int, aceValue : int) : int
-+ playerDealer(cardsOut : int, aceValue : int) : int</panel_attributes>
++ playerDealer(cardsOut : int, aceValue : int) : int
+bg=DARK_GRAY</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -181,7 +185,8 @@
 - resetGame()
 - stand()
 - winOrLoss()
-- repaintAll()</panel_attributes>
+- repaintAll()
+bg=CYAN</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -198,7 +203,8 @@
 - controller : Controller
 --
 + getSetupFrame() : String
-</panel_attributes>
+
+bg=GREEN</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -216,7 +222,8 @@
 + start()
 + handleError(error : Exception)
 
-</panel_attributes>
+
+bg=YELLOW</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -231,7 +238,8 @@
 --
 
 --
- + main(args : String [])</panel_attributes>
+ + main(args : String [])
+bg=BLUE</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
