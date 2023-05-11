@@ -45,7 +45,7 @@ public class BlackJack
 	}
 	
 	// Draws card from deck for every open slot in the player and dealer hands
-	public void generateHands()
+	private void generateHands()
 	{
 		
 		for (int index = 0; index < playerCards.length; index++)
@@ -60,7 +60,7 @@ public class BlackJack
 	}
 	
 	// returns a card from the main card deck. Takes index as a parameter - this insures that the same cards are not getting drawn
-	public Card drawCard(int index)
+	private Card drawCard(int index)
 	{
 		Card newCard = playingCards[index];
 		
@@ -68,7 +68,7 @@ public class BlackJack
 	}
 	
 	// Fills main card deck with cards created by the JsonToNot getCard method
-	public void addCardsToDeck()
+	private void addCardsToDeck()
 	{
 			
 		for (int index = 0; index < playingCards.length -1; index++)
